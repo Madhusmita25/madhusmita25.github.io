@@ -5,6 +5,9 @@
   <title>Madhusmita Ray | Ph.D. Student at IISc Bengaluru</title>
   <style>
     /* Global layout */
+    html {
+      scroll-behavior: smooth;
+    }
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
@@ -29,10 +32,12 @@
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
+      transition: color 0.3s, transform 0.2s;
     }
 
     nav a:hover {
-      text-decoration: underline;
+      color: #cde0ff;
+      transform: scale(1.05);
     }
 
     /* Header section */
@@ -63,23 +68,28 @@
       margin: 30px auto;
       padding: 50px;
       border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     section {
-      margin-bottom: 40px;
+      margin-bottom: 50px;
     }
 
     h2 {
-      color: #001F3F; /* Darker accent */
+      color: #001F3F;
       border-bottom: 2px solid #001F3F;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
     }
 
     ul {
       list-style-type: square;
       padding-left: 20px;
+      margin: 0;
+    }
+
+    ul li {
+      margin-bottom: 12px;
     }
 
     a {
@@ -100,7 +110,7 @@
       height: 160px;
       object-fit: cover;
       border: 3px solid #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     }
 
     /* Footer section */
@@ -125,23 +135,43 @@
       margin-top: 10px;
       border-radius: 5px;
       text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
     }
 
     .btn:hover {
       background-color: #000d33;
+      transform: scale(1.05);
     }
 
     /* Flex container for side-by-side sections */
     .side-by-side {
       display: flex;
-      gap: 40px; /* space between sections */
-      flex-wrap: wrap; /* wrap on smaller screens */
+      gap: 40px;
+      flex-wrap: wrap;
     }
 
-    /* Each section takes half the width */
     .side-by-side section {
-      flex: 1 1 45%; /* grow, shrink, basis */
-      min-width: 300px; /* ensures readability on smaller screens */
+      flex: 1 1 45%;
+      min-width: 300px;
+    }
+
+    /* Section separation effect */
+    section {
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    section ul li {
+      line-height: 1.5;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .side-by-side {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -155,6 +185,8 @@
     <a href="#interests">Research Interests</a>
     <a href="#patents">Patents</a>
     <a href="#publications">Publications</a>
+    <a href="#achievements">Achievements</a>
+    <a href="#contact">Contact</a>
   </nav>
 
   <!-- Header Section -->
@@ -170,28 +202,26 @@
     <!-- About Me -->
     <section id="about">
       <h2>About Me</h2>
-      <p>I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> at Indian Institute of Science (IISc), Bengaluru. During PhD, my work focuses on thermodynamic optimal design of a vapor compression desalination system. I have previously worked on understanding the impact of climate change on heating/cooling, energy demand, fuel cell systems, and solar simulator design.</p>
+      <p>I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> at Indian Institute of Science (IISc), Bengaluru. My research focuses on thermodynamic optimal design of a vapor compression desalination system. I have previously worked on the impact of climate change on energy demand, fuel cell systems, and LED-based solar simulator design.</p>
     </section>
 
     <!-- Side-by-side: Education and Research Interests -->
     <div class="side-by-side">
-      <!-- Education -->
       <section id="education">
         <h2>Education</h2>
         <ul>
           <li>Ph.D. in Mechanical Engineering, IISc Bengaluru [2023-Present]</li>
-          <li>M.Tech in Thermal Engineering, IIT Gandhinagar, [2021-2023]</li>
-          <li>B.Tech in Mechanical Engineering, Tezpur University, [2017-2021]</li>
+          <li>M.Tech in Thermal Engineering, IIT Gandhinagar [2021-2023]</li>
+          <li>B.Tech in Mechanical Engineering, Tezpur University [2017-2021]</li>
         </ul>
       </section>
 
-      <!-- Research Interests -->
       <section id="interests">
         <h2>Research Interests</h2>
         <ul>
-          <li>Fuel Cell</li>
-          <li>Vapor Compression</li>
-          <li>Batch Operation</li>
+          <li>Fuel Cell Systems</li>
+          <li>Vapor Compression Systems</li>
+          <li>Thermal Systems Design</li>
         </ul>
       </section>
     </div>
@@ -200,7 +230,7 @@
     <section id="patents">
       <h2>Patents</h2>
       <ul>
-        <li>Swaminathan, J & <strong>Ray, M.</strong>, "A FUEL CELL STACK FLOW DESIGN", Patent Application No: 202541000154 (Under Examination)</li>
+        <li>Swaminathan, J & <strong>Ray, M.</strong>, "A Fuel Cell Stack Flow Design", Patent Application No: 202541000154 (Under Examination)</li>
       </ul>
     </section>
 
@@ -208,22 +238,25 @@
     <section id="publications">
       <h2>Publications / Journals</h2>
       <ul>
-        <li><strong>Ray, M.</strong>, Chirag G. Patel, Seongpil Jeong, and Jaichander Swaminathan. ‘Fuel Cell Flow Path Design for Improved Efficiency and Power Density’<em>Journal of Power Sources</em> 652 (October 2025): 237630. 
-        <a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">
-          https://doi.org/10.1016/j.jpowsour.2025.237630.
-        </a>
+        <li>
+          <strong>Ray, M.</strong>, Chirag G. Patel, Seongpil Jeong, and Jaichander Swaminathan. 
+          ‘Fuel Cell Flow Path Design for Improved Efficiency and Power Density’, 
+          <em>Journal of Power Sources</em> 652 (October 2025): 237630. 
+          <a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">https://doi.org/10.1016/j.jpowsour.2025.237630</a>
         </li>
-        <li><strong>Ray, M.</strong>, Patel CG, Swaminathan J. “Designing fuel cell flow path for improved power performance”, ASSET-2025, IIT Guwahati. </li>
-
+        <li>
+          <strong>Ray, M.</strong>, Patel CG, Swaminathan J. “Designing fuel cell flow path for improved power performance”, ASSET-2025, IIT Guwahati.
+        </li>
       </ul>
     </section>
 
+    <!-- Achievements -->
     <section id="achievements">
       <h2>Achievements</h2>
       <ul>
         <li>
           <strong>Director's Fellowship</strong>, IIT Gandhinagar (2021 – 2023)<br>
-          Awarded an additional institute fellowship alongside the MHRD fellowship in recognition of outstanding academic performance.
+          Awarded an additional institute fellowship alongside the MHRD fellowship for outstanding academic performance.
         </li>
         <li>
           <strong>Rank Holder</strong>, B.Tech in Mechanical Engineering, Tezpur University (2017 – 2021)<br>
