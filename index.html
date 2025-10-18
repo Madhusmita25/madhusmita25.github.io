@@ -186,6 +186,20 @@
       color: #555;
     }
 
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 1.05em;
+    }
+
+    .contact-item img {
+      width: 22px;
+      height: 22px;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+
     @media (max-width: 768px) {
       .side-by-side {
         flex-direction: column;
@@ -212,13 +226,13 @@
     <p>Ph.D. Student | Energy Research | IISc Bengaluru</p>
 
     <div class="social-links">
-      <a href="https://www.linkedin.com/in/madhusmita-ray-1ba397184/" target="_blank">
+      <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-ID" target="_blank">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/linkedin.svg" alt="LinkedIn">
       </a>
-      <a href="https://scholar.google.com/citations?user=YKEWirwAAAAJ&hl=en&oi=ao" target="_blank">
+      <a href="https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID" target="_blank">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlescholar.svg" alt="Google Scholar">
       </a>
-      <a href="https://www.researchgate.net/profile/Madhusmita-Ray-2" target="_blank">
+      <a href="https://www.researchgate.net/profile/YOUR-RESEARCHGATE-ID" target="_blank">
         <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/researchgate.svg" alt="ResearchGate">
       </a>
     </div>
@@ -243,6 +257,7 @@
         <div class="card">Fuel Cell Systems</div>
         <div class="card">Vapor Compression Systems</div>
         <div class="card">Thermal Systems Design</div>
+        <div class="card">Batch Operation</div>
       </section>
     </div>
 
@@ -277,8 +292,18 @@
     <section id="contact">
       <h2>Contact</h2>
       <div class="card">
-        Email: <a href="mailto:madhusmita@iisc.ac.in">madhusmita@iisc.ac.in</a><br>
-        GitHub: <a href="https://github.com/madhusmita25">github.com/madhusmita25</a>
+        <div class="contact-item">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email">
+          <span><a href="mailto:madhusmita@iisc.ac.in">madhusmita@iisc.ac.in</a></span>
+        </div>
+        <div class="contact-item">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg" alt="GitHub">
+          <span><a href="https://github.com/madhusmita25">github.com/madhusmita25</a></span>
+        </div>
+        <div class="contact-item">
+          <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlemaps.svg" alt="Location">
+          <span>ICER, Tala Marg, Bengaluru, Karnataka 560012<br>Room 207, 1st Floor</span>
+        </div>
       </div>
     </section>
   </main>
