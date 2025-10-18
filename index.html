@@ -8,23 +8,25 @@
     html {
       scroll-behavior: smooth;
     }
+
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #2E3A87; /* Softer Dark Slate Blue */
+      background-color: #1C1C2E; /* dark professional background */
       color: #f0f0f0;
       line-height: 1.6;
     }
 
     /* Navigation bar */
     nav {
-      background-color: #001F3F; /* Navy Blue */
-      padding: 10px 20px;
-      text-align: center;
+      background-color: #111129;
+      padding: 12px 20px;
       position: sticky;
       top: 0;
       z-index: 1000;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     nav a {
@@ -36,26 +38,35 @@
     }
 
     nav a:hover {
-      color: #cde0ff;
+      color: #00BFFF;
       transform: scale(1.05);
     }
 
     /* Header section */
     header {
       text-align: center;
-      background-color: #001F3F; /* Navy Blue */
-      color: #f0f0f0;
-      padding: 50px 20px 40px;
+      padding: 60px 20px 40px;
+    }
+
+    .profile-pic {
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border: 3px solid #00BFFF;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     }
 
     header h1 {
       margin-bottom: 10px;
-      font-size: 2.5em;
-      letter-spacing: 1px;
+      font-size: 2.7em;
+      color: #00BFFF;
     }
 
     header p {
-      font-size: 1.2em;
+      font-size: 1.3em;
       color: #cde0ff;
     }
 
@@ -63,25 +74,21 @@
     main {
       width: 90%;
       max-width: 1100px;
-      background: #ffffff;
-      color: #333333;
-      margin: 30px auto;
-      padding: 50px;
+      margin: -40px auto 40px;
+      padding: 40px;
       border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      background-color: #2C2C3E;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
     }
 
     section {
       margin-bottom: 50px;
       padding: 20px;
-      border-radius: 10px;
-      background-color: #f9f9f9;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
-      color: #001F3F;
-      border-bottom: 2px solid #001F3F;
+      color: #00BFFF;
+      border-bottom: 2px solid #00BFFF;
       padding-bottom: 8px;
       margin-bottom: 20px;
     }
@@ -89,7 +96,6 @@
     ul {
       list-style-type: square;
       padding-left: 20px;
-      margin: 0;
     }
 
     ul li {
@@ -98,7 +104,7 @@
     }
 
     a {
-      color: #001F3F;
+      color: #00BFFF;
       text-decoration: none;
     }
 
@@ -106,58 +112,47 @@
       text-decoration: underline;
     }
 
-    /* Profile photo styling */
-    .profile-pic {
-      display: block;
-      margin: 0 auto 20px;
-      border-radius: 50%;
-      width: 160px;
-      height: 160px;
-      object-fit: cover;
-      border: 3px solid #fff;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Footer section */
-    footer {
-      text-align: center;
-      color: #f0f0f0;
-      font-size: 0.95em;
-      padding: 20px 10px 40px;
-      background-color: #001F3F; /* Navy Blue */
-    }
-
-    footer a {
-      color: #cde0ff;
-    }
-
     /* Buttons for CV download */
     .btn {
       display: inline-block;
-      background-color: #001F3F;
-      color: #fff;
-      padding: 10px 15px;
+      background-color: #00BFFF;
+      color: #111129;
+      padding: 10px 20px;
       margin-top: 10px;
-      border-radius: 5px;
+      border-radius: 6px;
+      font-weight: bold;
       text-decoration: none;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: transform 0.2s, background-color 0.3s;
     }
 
     .btn:hover {
-      background-color: #000d33;
+      background-color: #0095CC;
       transform: scale(1.05);
     }
 
-    /* Flex container for side-by-side sections */
+    /* Side-by-side container */
     .side-by-side {
       display: flex;
-      gap: 20px; /* tighter gap */
+      gap: 30px;
       flex-wrap: wrap;
     }
 
     .side-by-side section {
       flex: 1 1 45%;
       min-width: 300px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      color: #f0f0f0;
+      padding: 25px 10px 40px;
+      background-color: #111129;
+      font-size: 0.95em;
+    }
+
+    footer a {
+      color: #00BFFF;
     }
 
     /* Responsive adjustments */
@@ -170,35 +165,35 @@
 </head>
 <body>
 
-  <!-- Navigation Menu -->
+  <!-- Navigation -->
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About Me</a>
     <a href="#education">Education</a>
-    <a href="#interests">Research Interests</a>
+    <a href="#interests">Research</a>
     <a href="#patents">Patents</a>
     <a href="#publications">Publications</a>
     <a href="#achievements">Achievements</a>
     <a href="#contact">Contact</a>
   </nav>
 
-  <!-- Header Section -->
+  <!-- Header -->
   <header id="home">
     <img src="photo.jpg" alt="Madhusmita Ray" class="profile-pic">
     <h1>Madhusmita Ray</h1>
     <p>Ph.D. Student | Energy Research | IISc Bengaluru</p>
+    <a href="Madhusmita_CV.pdf" class="btn" target="_blank">Download CV</a>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main content -->
   <main>
-    
     <!-- About Me -->
     <section id="about">
       <h2>About Me</h2>
-      <p>I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> at IISc Bengaluru. My research focuses on thermodynamic optimal design of a vapor compression desalination system. I have previously worked on the impact of climate change on energy demand, fuel cell systems, and LED-based solar simulator design.</p>
+      <p>I am a Ph.D. student under <strong>Dr. Jaichander Swaminathan</strong> at IISc Bengaluru. My research focuses on thermodynamic optimal design of vapor compression desalination systems. I have worked on energy systems, fuel cells, and LED-based solar simulator design.</p>
     </section>
 
-    <!-- Side-by-side: Education and Research Interests -->
+    <!-- Side-by-side: Education & Research -->
     <div class="side-by-side">
       <section id="education">
         <h2>Education</h2>
@@ -215,6 +210,7 @@
           <li>Fuel Cell Systems</li>
           <li>Vapor Compression Systems</li>
           <li>Thermal Systems Design</li>
+          <li>LED-based Solar Simulation</li>
         </ul>
       </section>
     </div>
@@ -263,6 +259,7 @@
       <h2>Contact</h2>
       <p>Email: <a href="mailto:madhusmita@iisc.ac.in">madhusmita@iisc.ac.in</a></p>
       <p>GitHub: <a href="https://github.com/madhusmita25">github.com/madhusmita25</a></p>
+      <p>LinkedIn: <a href="https://www.linkedin.com/in/madhusmita-ray/" target="_blank">linkedin.com/in/madhusmita-ray/</a></p>
     </section>
   </main>
 
