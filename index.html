@@ -2,43 +2,220 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Madhusmita Ray | Ph.D. Student at IISc</title>
+  <title>Madhusmita Ray | Ph.D. Student at IISc Bengaluru</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; background: #fafafa; color: #333; }
-    h1 { color: #004d7a; }
-    a { color: #0073aa; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    section { margin-bottom: 25px; }
+    /* Global layout */
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #003366; /* Royal Blue background */
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Navigation bar */
+    nav {
+      background-color: #002147;
+      padding: 10px 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header section */
+    header {
+      text-align: center;
+      background-color: #002147;
+      color: #fff;
+      padding: 50px 20px 40px;
+    }
+
+    header h1 {
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #cde0ff;
+    }
+
+    /* Main content card */
+    main {
+      max-width: 900px;
+      background: white;
+      margin: 30px auto;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    section {
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: #003366;
+      border-bottom: 2px solid #003366;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 20px;
+    }
+
+    a {
+      color: #003366;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Profile photo styling */
+    .profile-pic {
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      border: 3px solid #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Footer section */
+    footer {
+      text-align: center;
+      color: #fff;
+      font-size: 0.95em;
+      padding: 20px 10px 40px;
+      background-color: #002147;
+    }
+
+    footer a {
+      color: #cde0ff;
+    }
+
+    /* Buttons for CV download */
+    .btn {
+      display: inline-block;
+      background-color: #003366;
+      color: #fff;
+      padding: 10px 15px;
+      margin-top: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #002147;
+    }
   </style>
 </head>
 <body>
-  <h1>Madhusmita Ray</h1>
-  <p>Ph.D. Student, Department of Mechanical Engineering, IISc Bengaluru</p>
 
-  <section>
-    <h2>About Me</h2>
-    <p>I  am a PhD Student working at the Water Energetics Lab at Energy Research in IISc. During PhD, my work focuses on thermodynamic optimal design of a vapor compression desalination system. I have previously worked on understanding the impact of climate change on heating/cooling, energy demand, fuel cell systems, and solar simulator design.</p>
-  </section>
+  <!-- Navigation Menu -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About Me</a>
+    <a href="#education">Education</a>
+    <a href="#interests">Research Interests</a>
+    <a href="#patents">Patents</a>
+    <a href="#cv">CV</a>
+    <a href="#publications">Publications</a>
+  </nav>
 
-  <section>
-    <h2>Research Interests</h2>
-    <ul>
-      <li>Thermodynamicsn</li>  
-      <li>Heat and Mass Transfer</li>
-    </ul>
-  </section>
+  <!-- Header Section -->
+  <header id="home">
+    <img src="photo.jpg" alt="Madhusmita Ray" class="profile-pic">
+    <h1>Madhusmita Ray</h1>
+    <p>Ph.D. Student | Department of Mechanical Engineering | IISc Bengaluru</p>
+  </header>
 
-  <section>
-    <h2>Publications</h2>
-    <ul>
-      <li><strong>Ray, M.</strong>, Ray, Madhusmita, Chirag G. Patel, Seongpil Jeong, and Jaichander Swaminathan. ‘Fuel Cell Flow Path Design for Improved Efficiency and Power Density’. Journal of Power Sources 652 (October 2025): 237630. https://doi.org/10.1016/j.jpowsour.2025.237630.</li>
-    </ul>
-  </section>
+  <!-- Main Content -->
+  <main>
+    
+    <!-- About Me -->
+    <section id="about">
+      <h2>About Me</h2>
+      <p>I am pursuing my Ph.D. under the guidance of <strong>Dr. Jaichander Swaminathan</strong> at the Indian Institute of Science (IISc), Bengaluru. My research focuses on the design and performance evaluation of LED-based solar simulators to replicate the solar spectrum for photovoltaic characterization.</p>
+    </section>
 
-  <section>
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:madhusmita@iisc.ac.in">madhusmita@iisc.ac.in</a></p>
-    <p>GitHub: <a href="https://github.com/madhusmita25">github.com/madhusmita25</a></p>
-  </section>
+    <!-- Education -->
+    <section id="education">
+      <h2>Education</h2>
+      <ul>
+        <li>Ph.D. in Mechanical Engineering, IISc Bengaluru (Ongoing)</li>
+        <li>M.Tech in Thermal Engineering, [University Name], [Year]</li>
+        <li>B.Tech in Mechanical Engineering, [University Name], [Year]</li>
+      </ul>
+    </section>
+
+    <!-- Research Interests -->
+    <section id="interests">
+      <h2>Research Interests</h2>
+      <ul>
+        <li>Thermal Systems and Energy Conversion</li>
+        <li>LED-based Solar Simulators</li>
+        <li>Heat and Mass Transfer</li>
+        <li>Optical and Radiative Heat Transfer</li>
+      </ul>
+    </section>
+
+    <!-- Patents -->
+    <section id="patents">
+      <h2>Patents</h2>
+      <ul>
+        <li><strong>Ray, M.</strong> & Co-Inventors, "Multi-Spectral LED Solar Simulator", Patent Application No: XXXX/2025</li>
+      </ul>
+    </section>
+
+    <!-- CV -->
+    <section id="cv">
+      <h2>Curriculum Vitae</h2>
+      <p>You can download my CV here:</p>
+      <a href="Madhusmita_CV.pdf" class="btn" target="_blank">Download CV</a>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications">
+      <h2>Publications / Journals</h2>
+      <ul>
+        <li><strong>Ray, M.</strong>, & Swaminathan, J. “Comparative Study of Jet and Fan Engines for TSFC Optimization,” <em>Journal of Power Sources</em> (Under Review).</li>
+        <!-- Add more publications here -->
+      </ul>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p>Email: <a href="mailto:madhusmita@iisc.ac.in">madhusmita@iisc.ac.in</a></p>
+      <p>GitHub: <a href="https://github.com/madhusmita25">github.com/madhusmita25</a></p>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 Madhusmita Ray | IISc Bengaluru
+  </footer>
+
 </body>
 </html>
