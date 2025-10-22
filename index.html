@@ -26,11 +26,34 @@
       padding: 2rem 1rem 4rem;
     }
 
+    /* --- Navigation Bar --- */
+    nav {
+      background-color: #004aad;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 0.8rem 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+    nav a:hover {
+      color: #ffea00;
+    }
+
     /* --- Top Section --- */
     .top {
       display: flex;
       flex-wrap: wrap;
       gap: 2rem;
+      margin-top: 2rem;
     }
     .left {
       flex: 1 1 250px;
@@ -108,7 +131,7 @@
       padding-left: 1.2rem;
     }
 
-    /* --- Publications --- */
+    /* --- Publications & Patents --- */
     .pub-card {
       background: #fff;
       border-radius: 0.6rem;
@@ -150,10 +173,24 @@
       .top {
         flex-direction: column;
       }
+      nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
     }
   </style>
 </head>
 <body>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="#about">About Me</a>
+    <a href="#patents">Patents</a>
+    <a href="#publications">Publications</a>
+    <a href="#experiences">Experiences</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <div class="container">
 
     <div class="top">
@@ -203,9 +240,8 @@
     <section id="patents">
       <h2>Patents</h2>
       <div class="pub-card">
-        Swaminathan, J., <strong>Ray, M.</strong> “A Fuel Cell Stack Flow Design,” <em>Application No:</em>, 2541000154 (Under Examination)
+        Swaminathan, J., <strong>Ray, M.</strong> “A Fuel Cell Stack Flow Design,” <em>Application No:</em> 2541000154 (Under Examination)
       </div>
-
     </section>
 
     <section id="publications">
@@ -225,21 +261,22 @@
         ER 210, Heat and Mass Transfer TA [Fall'25], IISc. Bangalore
       </div>
       <div class="pub-card">
-        ME 207, Fluid Dynamics TA [Spring'23], IIT Gandhinagar
+        ES 212, Fluid Mechanics TA [Spring'23], IIT Gandhinagar
       </div>
       <div class="pub-card">
         ES 101, Engineering Graphics TA [Spring'22], IIT Gandhinagar
       </div>
-
     </section>
     
     <div class="contact" id="contact">
       <p><i class="fa-solid fa-envelope"></i> <a href="mailto:madhusmitar@iisc.ac.in">madhusmitar@iisc.ac.in</a></p>
       <p><i class="fa-solid fa-location-dot"></i> ICER, IISc Bengaluru, India</p>
     </div>
+
     <footer>
       © 2025 Madhusmita Ray | IISc Bengaluru
     </footer>
+
   </div>
 </body>
 </html>
