@@ -5,81 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Madhusmita Ray | Ph.D. Student at IISc Bengaluru</title>
   <style>
-    /* --- Core layout --- */
     html {
       scroll-behavior: smooth;
     }
     body {
-      font-family: "Inter", "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
       color: #222;
       background-color: #fafafa;
       line-height: 1.6;
     }
-
-    /* --- Container --- */
     .container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 2rem 1rem 4rem;
     }
-
-    /* --- Header --- */
-    header {
-      text-align: center;
-      padding: 3rem 1rem 2rem;
+    .top {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
     }
-    header img {
+    .left-col {
+      flex: 1 1 250px;
+      min-width: 250px;
+      text-align: center;
+    }
+    .left-col img {
       width: 160px;
       height: 160px;
-      border-radius: 50%;
       object-fit: cover;
+      border-radius: 50%;
       margin-bottom: 1rem;
       border: 2px solid #ddd;
     }
-    header h1 {
-      font-size: 2.2rem;
+    .left-col h1 {
       margin: 0.2rem 0;
+      font-size: 2rem;
     }
-    header p {
-      font-size: 1.1rem;
+    .left-col p {
+      margin: 0.5rem 0;
       color: #555;
-      margin-bottom: 0.5rem;
     }
-
-    /* --- Navigation tags --- */
-    nav {
-      text-align: center;
-      margin-top: 1.5rem;
+    .left-col .social {
+      margin-top: 1rem;
     }
-    nav a {
+    .left-col .social a {
+      margin: 0 6px;
       display: inline-block;
-      color: #333;
-      background: #eaeaea;
-      padding: 0.35rem 0.8rem;
-      margin: 0.25rem;
-      border-radius: 0.4rem;
-      font-size: 0.95rem;
+      font-size: 1.2rem;
+      color: #004aad;
       text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    nav a:hover {
-      background: #d6d6d6;
     }
 
-    /* --- Sections --- */
+    .right-col {
+      flex: 2 1 500px;
+      min-width: 300px;
+    }
     section {
-      margin-top: 3rem;
+      margin-bottom: 2.5rem;
     }
     section h2 {
       font-size: 1.4rem;
+      margin-bottom: 0.6rem;
       border-bottom: 2px solid #ccc;
-      padding-bottom: 0.4rem;
-      margin-bottom: 1rem;
+      padding-bottom: 0.3rem;
       color: #111;
     }
-
     .card {
       background: #fff;
       border-radius: 0.6rem;
@@ -87,8 +79,13 @@
       margin-bottom: 1rem;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
-
-    /* --- Footer --- */
+    a {
+      color: #004aad;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
     footer {
       text-align: center;
       font-size: 0.9rem;
@@ -97,83 +94,72 @@
       border-top: 1px solid #e5e5e5;
       padding-top: 1rem;
     }
-
-    /* --- Links --- */
-    a {
-      color: #004aad;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* --- Responsive --- */
-    @media (max-width:600px){
-      header h1{font-size:1.8rem;}
-      nav a{font-size:0.9rem;}
+    @media (max-width: 768px) {
+      .top {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
-
 <body>
   <div class="container">
-    <header>
-      <img src="photo.jpg" alt="Madhusmita Ray">
-      <h1>Madhusmita Ray</h1>
-      <p>Ph.D. Student | Energy Research | IISc Bengaluru</p>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#publications">Publications</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
 
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> at the 
-        <strong>Energy Research Centre, IISc Bengaluru</strong>.  
-        My research focuses on the thermodynamic optimal design of vapor compression desalination systems.
-        Previously, I have worked on the impact of climate change on heating/cooling demand,
-        optimization of fuel cell systems, and LED-based solar simulator design.
-      </p>
-    </section>
+    <div class="top">
+      <div class="left-col">
+        <img src="photo.jpg" alt="Madhusmita Ray">
+        <h1>Madhusmita Ray</h1>
+        <p>Ph.D. Student | Energy Research | IISc Bengaluru</p>
+        <div class="social">
+          <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-ID" target="_blank">LinkedIn</a> |
+          <a href="https://github.com/madhusmita25" target="_blank">GitHub</a> |
+          <a href="https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID" target="_blank">Google Scholar</a>
+        </div>
+      </div>
 
-    <section id="research">
-      <h2>Research Interests</h2>
-      <div class="card">Fuel Cell Systems</div>
-      <div class="card">Vapor Compression Systems</div>
-      <div class="card">Thermal Systems Design</div>
-      <div class="card">Batch Operation and Process Optimization</div>
-    </section>
+      <div class="right-col">
+        <section id="about">
+          <h2>About</h2>
+          <p>I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> at the Energy Research Centre, IISc Bengaluru. My work focuses on the thermodynamic optimal design of vapor compression desalination systems. Previously, I worked on understanding the impact of climate change on heating/cooling demand, optimization of fuel-cell systems, and LED-based solar simulator design.</p>
+        </section>
+
+        <section id="research">
+          <h2>Research Interests</h2>
+          <div class="card">Fuel Cell Systems</div>
+          <div class="card">Vapor Compression Systems</div>
+          <div class="card">Thermal Systems Design</div>
+          <div class="card">Batch Operation & Process Optimization</div>
+        </section>
+
+        <section id="education">
+          <h2>Education</h2>
+          <div class="card"><strong>Ph.D. in Energy Research</strong> <br> Indian Institute of Science, Bengaluru (2023–Present)</div>
+          <div class="card"><strong>M.Tech in Mechanical Engineering</strong> <br> IIT Gandhinagar (2021–2023)</div>
+          <div class="card"><strong>B.Tech in Mechanical Engineering</strong> <br> Tezpur University (2017–2021)</div>
+        </section>
+      </div>
+    </div>
 
     <section id="publications">
       <h2>Publications</h2>
       <div class="card">
-        <strong>Ray, M.</strong>, Chirag G. Patel, Seongpil J., and Swaminathan J.,
-        “Fuel Cell Flow Path Design for Improved Efficiency and Power Density,” 
-        <em>Journal of Power Sources</em> 652 (2025): 237630.
-        <br><a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">DOI: 10.1016/j.jpowsour.2025.237630</a>
+        <strong>Ray, M.</strong>, Chirag G. Patel, Seongpil J., & Swaminathan J., “Fuel Cell Flow Path Design for Improved Efficiency and Power Density”, <em>Journal of Power Sources</em> 652 (2025): 237630.<br>
+        <a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">DOI: 10.1016/j.jpowsour.2025.237630</a>
       </div>
       <div class="card">
-        <strong>Ray, M.</strong>, Patel C.G., Swaminathan J., “Designing fuel cell flow path for improved power performance,” 
-        ASSET-2025, IIT Guwahati.
+        <strong>Ray, M.</strong>, Patel C.G., Swaminathan J., “Designing Fuel Cell Flow Path for Improved Power Performance”, ASSET-2025, IIT Guwahati.
       </div>
     </section>
 
     <section id="contact">
       <h2>Contact</h2>
       <p>Email: <a href="mailto:madhusmitar@iisc.ac.in">madhusmitar@iisc.ac.in</a></p>
-      <p>GitHub: <a href="https://github.com/madhusmita25" target="_blank">github.com/madhusmita25</a></p>
-      <p>LinkedIn: <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-ID" target="_blank">linkedin.com/in/YOUR-LINKEDIN-ID</a></p>
-      <p>Google Scholar: <a href="https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID" target="_blank">scholar.google.com/citations?user=YOUR-SCHOLAR-ID</a></p>
-      <p>Address: ICER, Tala Marg, Bengaluru 560012</p>
+      <p>Location: ICER, Tala Marg, Bengaluru 560012</p>
     </section>
 
     <footer>
       © 2025 Madhusmita Ray | IISc Bengaluru
     </footer>
+
   </div>
 </body>
 </html>
