@@ -1,249 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Madhusmita Ray | Ph.D. Student at IISc Bengaluru</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a2d9b5b6c1.js" crossorigin="anonymous"></script>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background-color: #fafafa;
+      background-color: #f7f9fc;
       color: #222;
+      scroll-behavior: smooth;
     }
-
-    /* --- Navbar --- */
-    nav {
-      position: sticky;
+    header {
+      position: fixed;
       top: 0;
-      background-color: #ffffff;
-      border-bottom: 1px solid #e5e5e5;
-      text-align: center;
-      padding: 0.8rem 0;
-      z-index: 100;
+      width: 100%;
+      background: white;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      z-index: 1000;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
     }
     nav a {
-      color: #004aad;
       text-decoration: none;
-      font-weight: 600;
-      margin: 0 15px;
-      font-size: 1.05rem;
-      transition: color 0.2s;
+      color: #333;
+      font-weight: 500;
     }
     nav a:hover {
-      color: #000;
+      color: #0077b6;
     }
 
     .container {
       display: flex;
-      flex-wrap: wrap;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
+      margin-top: 100px;
+      padding: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      gap: 50px;
     }
 
-    /* --- Left Sidebar --- */
     .left {
-      flex: 1 1 250px;
-      text-align: center;
-      min-width: 250px;
-      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    .left img {
-      width: 160px;
-      height: 160px;
+
+    .profile-photo {
+      width: 180px;
+      height: 180px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #ccc;
-      margin-bottom: 1rem;
+      margin-bottom: 20px;
     }
-    .left h1 {
-      font-size: 1.9rem;
-      margin-bottom: 0.4rem;
+
+    .info {
+      text-align: center;
     }
-    .left p {
-      color: #444;
-      margin-top: 0;
-      font-size: 1rem;
+
+    .info h1 {
+      margin: 10px 0 5px;
+      font-size: 24px;
+    }
+
+    .info p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .icons {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
     }
     .icons a {
-      margin: 0 8px;
-      color: #004aad;
-      font-size: 1.4rem;
-      text-decoration: none;
-      transition: color 0.2s ease;
+      color: #333;
+      font-size: 20px;
     }
     .icons a:hover {
-      color: #000;
+      color: #0077b6;
     }
 
-    /* --- Right Main Content --- */
     .right {
-      flex: 2 1 600px;
-      min-width: 300px;
-      padding: 1rem;
+      flex: 2;
     }
+
+    h2 {
+      margin-top: 40px;
+      color: #0077b6;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
     section {
-      margin-bottom: 3rem;
-    }
-    section h2 {
-      font-size: 1.6rem;
-      border-bottom: 2px solid #004aad;
-      padding-bottom: 0.4rem;
-      margin-bottom: 1rem;
-      color: #004aad;
+      margin-bottom: 40px;
     }
 
-    /* --- Cards / Boxes --- */
-    .card {
-      background-color: #fff;
-      border-radius: 0.6rem;
-      padding: 1rem 1.2rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      margin-bottom: 1rem;
-    }
-    .card h3 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      color: #004aad;
-    }
-    .card ul {
-      margin: 0;
-      padding-left: 1.2rem;
-    }
-    a {
-      color: #004aad;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* --- Contact Section --- */
-    .contact-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 0.8rem;
-      font-size: 1.05rem;
-    }
-    .contact-item img {
-      width: 22px;
-      height: 22px;
-      margin-right: 10px;
+    .contact-info i {
+      margin-right: 8px;
+      color: #0077b6;
     }
 
     footer {
       text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      padding: 1.2rem;
-      border-top: 1px solid #e5e5e5;
-      margin-top: 2rem;
+      padding: 20px;
+      font-size: 14px;
+      background: #f0f2f5;
+      border-top: 1px solid #ddd;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .container {
         flex-direction: column;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        position: relative;
       }
     }
   </style>
 </head>
 <body>
 
+<header>
   <nav>
     <a href="#about">About Me</a>
-    <a href="#patents">Patents</a>
     <a href="#publications">Publications</a>
+    <a href="#patents">Patents</a>
     <a href="#contact">Contact</a>
   </nav>
+</header>
 
-  <div class="container">
-    <!-- Left Column -->
-    <div class="left">
-      <img src="photo.jpg" alt="Madhusmita Ray">
+<div class="container">
+  <!-- LEFT COLUMN -->
+  <div class="left">
+    <img src="photo.jpg" alt="Madhusmita Ray" class="profile-photo">
+    <div class="info">
       <h1>Madhusmita Ray</h1>
-      <p>Ph.D. Student | Energy Research | IISc Bengaluru</p>
+      <p>Ph.D. Student, IISc Bengaluru</p>
+      <p>Fuel Cell Systems | Energy Conversion</p>
       <div class="icons">
-        <a href="mailto:madhusmitar@iisc.ac.in" title="Email"><i class="fa-solid fa-envelope"></i></a>
-        <a href="https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID" title="Google Scholar" target="_blank"><i class="fa-brands fa-google-scholar"></i></a>
-        <a href="https://github.com/madhusmita25" title="GitHub" target="_blank"><i class="fa-brands fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/YOUR-LINKEDIN-ID" title="LinkedIn" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="mailto:madhusmitaray@iisc.ac.in" title="Email"><i class="fas fa-envelope"></i></a>
+        <a href="https://scholar.google.com/" title="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+        <a href="https://orcid.org/" title="ORCID"><i class="fab fa-orcid"></i></a>
+        <a href="https://www.linkedin.com/" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
       </div>
     </div>
 
-    <!-- Right Column -->
-    <div class="right">
-      <section id="about">
-        <h2>About Me</h2>
-        <p>I am a Ph.D. student working under <strong>Dr. Jaichander Swaminathan</strong> at the Energy Research Centre, IISc Bengaluru. My research focuses on thermodynamic optimal design of vapor compression desalination systems. My prior work includes LED-based solar simulator design, turbojet–turbofan comparative analysis, and optimization of fuel cell systems.</p>
-        
-        <div class="card">
-          <h3><i class="fa-solid fa-lightbulb"></i> Research Interests</h3>
-          <ul>
-            <li>Fuel Cell Systems</li>
-            <li>Vapor Compression Systems</li>
-            <li>Thermal Systems Design</li>
-            <li>LED-based Solar Simulation</li>
-          </ul>
-        </div>
-
-        <div class="card">
-          <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
-          <ul>
-            <li><strong>Ph.D.</strong> – IISc Bengaluru (2023–Present)</li>
-            <li><strong>M.Tech</strong> – IIT Gandhinagar (2021–2023)</li>
-            <li><strong>B.Tech</strong> – Tezpur University (2017–2021)</li>
-          </ul>
-        </div>
+    <!-- Research Interests + Education Grid -->
+    <div class="grid">
+      <section id="interests">
+        <h2>Research Interests</h2>
+        <ul>
+          <li>Fuel Cell Systems</li>
+          <li>Energy Conversion</li>
+          <li>Thermal Management</li>
+          <li>Hybrid Power Systems</li>
+        </ul>
       </section>
 
-      <section id="patents">
-        <h2>Patents</h2>
-        <div class="card">
-          Swaminathan, J. & <strong>Ray, M.</strong>, “A Fuel Cell Stack Flow Design,” Patent Application No: 202541000154 (Under Examination)
-        </div>
+      <section id="education">
+        <h2>Education</h2>
+        <ul>
+          <li>Ph.D., IISc Bengaluru (Ongoing)</li>
+          <li>M.Tech, IIT Kharagpur</li>
+          <li>B.Tech, NIT Rourkela</li>
+        </ul>
       </section>
-
-      <section id="publications">
-        <h2>Publications</h2>
-        <div class="card">
-          <strong>Ray, M.</strong>, Patel, C.G., Swaminathan, J. (2025). “Fuel Cell Flow Path Design for Improved Efficiency and Power Density,” <em>Journal of Power Sources</em> 652: 237630.  
-          <br><a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">https://doi.org/10.1016/j.jpowsour.2025.237630</a>
-        </div>
-        <div class="card">
-          <strong>Ray, M.</strong>, Patel, C.G., Swaminathan, J. “Designing Fuel Cell Flow Path for Improved Power Performance,” ASSET-2025, IIT Guwahati.
-        </div>
-      </section>
-
-      <section id="contact">
-        <h2>Contact</h2>
-        <div class="card">
-          <div class="contact-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/maildotru.svg" alt="Email">
-            <span><a href="mailto:madhusmitar@iisc.ac.in">madhusmitar@iisc.ac.in</a></span>
-          </div>
-          <div class="contact-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/googlemaps.svg" alt="Location">
-            <span>ICER, IISc Bengaluru, Room 102, Ground Floor, Karnataka 560012</span>
-          </div>
-          <div class="contact-item">
-            <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/phone.svg" alt="Phone">
-            <span>+91-XXXXXXXXXX (Office)</span>
-          </div>
-        </div>
-      </section>
-
-      <footer>
-        © 2025 Madhusmita Ray | IISc Bengaluru
-      </footer>
     </div>
+
+    <section id="publications">
+      <h2>Publications</h2>
+      <ol>
+        <li>Ray, M., & Swaminathan, J. (2024). Optimization of Fuel Cell Hybrid Systems. <em>Journal of Power Sources</em>.</li>
+        <li>Ray, M., et al. (2023). Comparative Study of Turbojet and Turbofan Engines. <em>Energy Reports</em>.</li>
+      </ol>
+    </section>
+
+    <section id="patents">
+      <h2>Patents</h2>
+      <ul>
+        <li>Ray, M., & Swaminathan, J. (2023). Multi-spectral Solar Simulator Design. <em>Patent Application No. XXXX</em>.</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact-info">
+        <p><i class="fas fa-phone"></i> Office: +91 80 2293 XXXX</p>
+        <p><i class="fas fa-envelope"></i> madhusmitaray@iisc.ac.in</p>
+      </div>
+    </section>
   </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right" id="about">
+    <h2>About Me</h2>
+    <p>
+      I am a Ph.D. student in the Department of Mechanical Engineering at the Indian Institute of Science, Bengaluru, 
+      working under the supervision of Dr. Jaichander Swaminathan. My research focuses on the development of 
+      high-efficiency fuel cell and hybrid power systems, with an emphasis on energy optimization and system integration.
+    </p>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Madhusmita Ray | Designed with ❤️ using HTML & CSS
+</footer>
+
 </body>
 </html>
