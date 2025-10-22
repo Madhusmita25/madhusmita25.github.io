@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     html {
       scroll-behavior: smooth;
@@ -42,9 +43,14 @@
       color: #fff;
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s ease;
+      transition: color 0.2s ease, border-bottom 0.2s ease;
+      padding-bottom: 3px;
     }
     nav a:hover {
+      color: #ffea00;
+    }
+    nav a.active {
+      border-bottom: 2px solid #ffea00;
       color: #ffea00;
     }
 
@@ -180,15 +186,15 @@
     }
   </style>
 </head>
-<body>
 
+<body>
   <!-- Navigation Bar -->
   <nav>
-    <a href="#about">About Me</a>
-    <a href="#patents">Patents</a>
-    <a href="#publications">Publications</a>
-    <a href="#experiences">Experiences</a>
-    <a href="#contact">Contact</a>
+    <a href="#about" class="nav-link active">About Me</a>
+    <a href="#patents" class="nav-link">Patents</a>
+    <a href="#publications" class="nav-link">Publications</a>
+    <a href="#experiences" class="nav-link">Experiences</a>
+    <a href="#contact" class="nav-link">Contact</a>
   </nav>
 
   <div class="container">
@@ -276,7 +282,28 @@
     <footer>
       © 2025 Madhusmita Ray | IISc Bengaluru
     </footer>
-
   </div>
+
+  <!-- Highlight Active Section Script -->
+  <script>
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("nav a");
+
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute("id");
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
