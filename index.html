@@ -234,7 +234,7 @@
     .carousel {
       position: relative;
       width: 100%;
-      height: 230px;
+      height: 300px;
       overflow: hidden;
       background: #e8eefc;
     }
@@ -246,13 +246,14 @@
     .carousel-slide.active { display: block; }
     .carousel-slide img {
       width: 100%;
-      height: 230px;
+      height: 300px;
       object-fit: cover;
+      object-position: center top;
       display: block;
     }
     .img-placeholder {
       width: 100%;
-      height: 230px;
+      height: 300px;
       background: linear-gradient(135deg, #e8eefc 0%, #d0dcf5 100%);
       display: flex;
       flex-direction: column;
@@ -502,8 +503,8 @@
           </div>
           <div class="highlight-caption">
             <span class="hl-tag">Award · Nov 2026</span>
-            <strong>ICSOBA 2026 Award, Bangalore</strong>
-            <p>Received an award at the 44th International ICSOBA Conference for work on dynamic modeling of multistage MVR for alumina refining.</p>
+            <strong>ICSOBA 2026 Student Award, Bangalore</strong>
+            <p>Received ICSOBA 2026 Student Award at the 44th International ICSOBA Conference.</p>
           </div>
         </div>
 
@@ -512,16 +513,16 @@
         <div class="highlight-card">
           <div class="carousel" id="carousel-adelaide">
             <div class="carousel-slide active">
-              <img src="adelaide-1.jpg" alt="Adelaide Visit – Photo 1"
-                   onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'fa-solid fa-image\'></i><span>Upload <strong>adelaide-1.jpg</strong><br>to your GitHub repo</span></div>'">
+              <img src="adelaide-1.jpeg" alt="Adelaide Visit – Photo 1"
+                   onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'fa-solid fa-image\'></i><span>Upload <strong>adelaide-1.jpeg</strong><br>to your GitHub repo</span></div>'">
             </div>
             <div class="carousel-slide">
-              <img src="adelaide-2.jpg" alt="Adelaide Visit – Photo 2"
-                   onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'fa-solid fa-image\'></i><span>Upload <strong>adelaide-2.jpg</strong><br>to your GitHub repo</span></div>'">
+              <img src="adelaide-2.jpeg" alt="Adelaide Visit – Photo 2"
+                   onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'fa-solid fa-image\'></i><span>Upload <strong>adelaide-2.jpeg</strong><br>to your GitHub repo</span></div>'">
             </div>
             <div class="carousel-slide">
-              <img src="adelaide-3.jpg" alt="Adelaide Visit – Photo 3"
-                   onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'fa-solid fa-image\'></i><span>Upload <strong>adelaide-3.jpg</strong><br>to your GitHub repo</span></div>'">
+              <img src="adelaide-3.jpeg" alt="Adelaide Visit – Photo 3"
+                   onerror="this.parentElement.innerHTML='<div class=\'img-placeholder\'><i class=\'fa-solid fa-image\'></i><span>Upload <strong>adelaide-3.jpeg</strong><br>to your GitHub repo</span></div>'"
             </div>
             <button class="carousel-btn prev" onclick="moveCarousel('adelaide', -1)">&#8249;</button>
             <button class="carousel-btn next" onclick="moveCarousel('adelaide',  1)">&#8250;</button>
