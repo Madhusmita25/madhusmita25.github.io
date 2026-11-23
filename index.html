@@ -10,161 +10,267 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <style>
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      padding: 0;
+    html, body {
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;         /* body never scrolls — pages scroll internally */
       font-family: 'Inter', sans-serif;
-      background-color: #f5f7fa;
+      background: #f5f7fa;
       color: #222;
       line-height: 1.6;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 2rem 1rem 4rem;
-    }
-
-    /* ── Navigation ── */
+    /* ── Navigation bar ── */
     nav {
-      background-color: #004aad;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      background: #004aad;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 1.5rem;
-      padding: 0.8rem 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      gap: 1.4rem;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
     nav a {
       color: #fff;
       text-decoration: none;
+      font-size: 0.88rem;
       font-weight: 500;
-      font-size: 0.9rem;
       letter-spacing: 0.02em;
-      padding-bottom: 3px;
-      transition: color 0.2s ease;
+      padding-bottom: 2px;
+      cursor: pointer;
+      transition: color 0.2s;
     }
     nav a:hover { color: #ffea00; }
     nav a.active {
-      border-bottom: 2px solid #ffea00;
       color: #ffea00;
+      border-bottom: 2px solid #ffea00;
     }
 
-    /* ── Top / Profile ── */
-    .top {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2rem;
-      margin-top: 2rem;
+    /* ── Horizontal slider ── */
+    .slider-wrapper {
+      position: fixed;
+      top: 44px;               /* below nav */
+      left: 0; right: 0;
+      bottom: 36px;            /* above dots bar */
+      overflow: hidden;
     }
-    .left {
-      flex: 1 1 240px;
-      min-width: 220px;
+    .slider {
+      display: flex;
+      height: 100%;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform;
+    }
+
+    /* ── Individual pages ── */
+    .page {
+      min-width: 100vw;
+      width: 100vw;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 1rem 5rem;       /* side padding keeps content clear of arrows */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page-inner {
+      width: 100%;
+      max-width: 1050px;
+      margin: auto;             /* auto top+bottom = vertical centering when space allows;
+                                   overflows gracefully into page scroll when content is tall */
+      padding: 1rem 0 2rem;
+    }
+    .page h2 {
+      font-size: 1.5rem;
+      color: #111;
+      border-bottom: 2px solid #004aad;
+      padding-bottom: 0.35rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ── Left / Right arrow buttons ── */
+    .page-arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 400;
+      width: 42px;
+      height: 72px;
+      border: none;
+      border-radius: 8px;
+      background: rgba(0,74,173,0.14);
+      color: #004aad;
+      font-size: 2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, opacity 0.3s, transform 0.15s;
+      line-height: 1;
+    }
+    .page-arrow:hover {
+      background: rgba(0,74,173,0.28);
+      transform: translateY(-50%) scale(1.06);
+    }
+    .page-arrow.left  { left: 6px; }
+    .page-arrow.right { right: 6px; }
+    .page-arrow:disabled {
+      opacity: 0.15;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    /* ── Bottom page dots ── */
+    .page-dots-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 36px;
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      z-index: 500;
+    }
+    .dot-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 20px;
+      transition: background 0.2s;
+    }
+    .dot-item:hover { background: #eef2fb; }
+    .dot-item .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #ccc;
+      transition: background 0.25s, transform 0.25s;
+      flex-shrink: 0;
+    }
+    .dot-item .dot-label {
+      font-size: 0.7rem;
+      color: #aaa;
+      font-weight: 500;
+      display: none;        /* shown only for active */
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+    .dot-item.active .dot {
+      background: #004aad;
+      transform: scale(1.25);
+    }
+    .dot-item.active .dot-label {
+      display: inline;
+      color: #004aad;
+    }
+
+    /* ── Page counter (top-right of each page) ── */
+    .page-counter {
+      position: fixed;
+      top: 54px;
+      right: 56px;
+      font-size: 0.75rem;
+      color: #aaa;
+      z-index: 400;
+      pointer-events: none;
+    }
+
+    /* ───────────────────────────────────────────────
+       PAGE 1 — ABOUT ME (profile sidebar + content)
+    ─────────────────────────────────────────────── */
+    .about-layout {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      padding-top: 0.5rem;
+    }
+    .profile-col {
+      flex: 0 0 210px;
       text-align: center;
     }
-    .left img {
-      width: 165px;
-      height: 165px;
+    .profile-col img {
+      width: 150px; height: 150px;
       object-fit: cover;
       border-radius: 50%;
       border: 3px solid #004aad;
-      margin-bottom: 0.8rem;
       box-shadow: 0 4px 12px rgba(0,74,173,0.2);
+      margin-bottom: 0.7rem;
     }
-    .left h1 {
-      font-size: 1.75rem;
-      margin: 0.3rem 0 0.2rem;
-      color: #111;
+    .profile-col h1 {
+      font-size: 1.5rem;
+      margin: 0.2rem 0;
     }
-    .left .tagline {
+    .profile-col .tagline {
+      font-size: 0.84rem;
       color: #555;
-      font-size: 0.9rem;
-      margin: 0.2rem 0 0.1rem;
-      line-height: 1.4;
+      margin: 0.15rem 0;
     }
-    .left .tagline-sub {
+    .profile-col .tagline-sub {
+      font-size: 0.78rem;
       color: #004aad;
-      font-size: 0.82rem;
       font-weight: 600;
-      letter-spacing: 0.03em;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
-
     .cv-btn {
       display: inline-block;
-      margin: 0.6rem 0 0.8rem;
-      padding: 0.42rem 1.1rem;
-      background-color: #004aad;
+      margin: 0.5rem 0 0.6rem;
+      padding: 0.38rem 1rem;
+      background: #004aad;
       color: #fff !important;
       border-radius: 20px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 600;
-      letter-spacing: 0.03em;
       text-decoration: none !important;
-      transition: background 0.2s ease, transform 0.1s ease;
+      transition: background 0.2s, transform 0.1s;
       box-shadow: 0 2px 6px rgba(0,74,173,0.25);
     }
-    .cv-btn:hover {
-      background-color: #003080;
-      transform: translateY(-1px);
-    }
-    .cv-btn i { margin-right: 5px; }
-
+    .cv-btn:hover { background: #003080; transform: translateY(-1px); }
+    .cv-btn i { margin-right: 4px; }
     .icons { margin-top: 0.4rem; }
     .icons a {
-      margin: 0 7px;
+      margin: 0 6px;
       color: #004aad;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       text-decoration: none;
-      transition: color 0.2s ease, transform 0.2s ease;
       display: inline-block;
+      transition: color 0.2s, transform 0.2s;
     }
     .icons a:hover { color: #001f5b; transform: scale(1.15); }
 
-    .right {
-      flex: 2 1 580px;
-      min-width: 280px;
-    }
+    .about-col { flex: 1 1 400px; }
+    .about-col p { margin-top: 0; }
 
-    /* ── Sections ── */
-    section { margin-bottom: 2.5rem; }
-    section h2 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      border-bottom: 2px solid #004aad;
-      padding-bottom: 0.35rem;
-      color: #111;
-    }
-
-    /* ── About cards ── */
-    .about-content { margin-bottom: 1.6rem; }
     .about-grid {
       display: flex;
+      gap: 1rem;
       flex-wrap: wrap;
-      gap: 1.2rem;
+      margin-top: 1rem;
     }
     .card {
       background: #fff;
       border-radius: 0.7rem;
-      padding: 1rem 1.2rem;
+      padding: 1rem 1.1rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      flex: 1 1 260px;
+      flex: 1 1 220px;
     }
     .card h3 {
-      margin-top: 0;
-      font-size: 1rem;
-      margin-bottom: 0.6rem;
+      margin: 0 0 0.5rem;
+      font-size: 0.95rem;
       color: #004aad;
     }
-    .card ul { margin: 0; padding-left: 1.2rem; }
-    .card li { margin-bottom: 0.25rem; }
+    .card ul { margin: 0; padding-left: 1.1rem; }
+    .card li { margin-bottom: 0.2rem; font-size: 0.9rem; }
 
-    /* ── Pub cards ── */
+    /* ── Shared card styles ── */
     .pub-card {
       background: #fff;
       border-radius: 0.7rem;
@@ -172,15 +278,16 @@
       margin-bottom: 0.9rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
       border-left: 3px solid #004aad;
+      font-size: 0.93rem;
     }
     .pub-plain-summary {
-      font-size: 0.85rem;
+      font-size: 0.83rem;
       color: #555;
       margin-top: 0.4rem;
       font-style: italic;
     }
 
-    /* ── Experience cards ── */
+    /* ── Experiences ── */
     .exp-card {
       background: #fff;
       border-radius: 0.7rem;
@@ -191,152 +298,12 @@
       gap: 1rem;
       align-items: flex-start;
     }
-    .exp-icon {
-      font-size: 1.5rem;
-      color: #004aad;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .exp-body { flex: 1; }
-    .exp-body strong { font-size: 1rem; }
-    .exp-body .exp-meta {
-      font-size: 0.82rem;
-      color: #777;
-      margin: 0.1rem 0 0.3rem;
-    }
-    .exp-body .exp-desc {
-      font-size: 0.88rem;
-      color: #444;
-      margin: 0;
-    }
+    .exp-icon { font-size: 1.4rem; color: #004aad; flex-shrink: 0; margin-top: 2px; }
+    .exp-body strong { font-size: 0.98rem; }
+    .exp-meta { font-size: 0.8rem; color: #777; margin: 0.1rem 0 0.25rem; }
+    .exp-desc { font-size: 0.86rem; color: #444; margin: 0; }
 
-    /* ── Highlights / Photo carousel ── */
-    .highlights-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.4rem;
-    }
-    .highlight-card {
-      background: #fff;
-      border-radius: 0.9rem;
-      overflow: hidden;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-      flex: 1 1 300px;
-      max-width: 48%;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .highlight-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.13);
-    }
-
-    /* Carousel */
-    .carousel {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      overflow: hidden;
-      background: #e8eefc;
-    }
-    .carousel-slide {
-      display: none;
-      width: 100%;
-      height: 100%;
-    }
-    .carousel-slide.active { display: block; }
-    .carousel-slide img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-    .img-placeholder {
-      width: 100%;
-      height: 300px;
-      background: linear-gradient(135deg, #e8eefc 0%, #d0dcf5 100%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #004aad;
-      font-size: 0.82rem;
-      text-align: center;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-    .img-placeholder i { font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5; }
-    .img-placeholder span { opacity: 0.65; line-height: 1.5; }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.32);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
-      z-index: 2;
-      padding: 0;
-    }
-    .carousel-btn:hover { background: rgba(0,0,0,0.55); }
-    .carousel-btn.prev { left: 8px; }
-    .carousel-btn.next { right: 8px; }
-
-    .carousel-dots {
-      position: absolute;
-      bottom: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 5px;
-      z-index: 2;
-    }
-    .carousel-dots .dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-    .carousel-dots .dot.active { background: #fff; }
-
-    .highlight-caption {
-      padding: 0.9rem 1.1rem 1rem;
-    }
-    .highlight-caption .hl-tag {
-      display: inline-block;
-      background: #e8f0fe;
-      color: #004aad;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 20px;
-      margin-bottom: 0.4rem;
-    }
-    .highlight-caption strong {
-      display: block;
-      font-size: 0.98rem;
-      color: #111;
-      margin-bottom: 0.25rem;
-    }
-    .highlight-caption p {
-      font-size: 0.85rem;
-      color: #555;
-      margin: 0;
-    }
-
-    /* ── Achievements — clean, no icons ── */
+    /* ── Achievements ── */
     .ach-card {
       background: #fff;
       border-radius: 0.7rem;
@@ -345,363 +312,517 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
       border-left: 3px solid #004aad;
     }
-    .ach-title {
-      font-weight: 700;
-      font-size: 1rem;
-      color: #111;
-    }
-    .ach-org {
-      font-size: 0.82rem;
-      color: #888;
-      margin: 0.15rem 0 0.4rem;
-    }
-    .ach-desc {
-      font-size: 0.88rem;
-      color: #444;
-      margin: 0;
-    }
+    .ach-title { font-weight: 700; font-size: 0.98rem; color: #111; }
+    .ach-org   { font-size: 0.8rem; color: #888; margin: 0.12rem 0 0.35rem; }
+    .ach-desc  { font-size: 0.86rem; color: #444; margin: 0; }
 
+    /* ── Highlights / Carousels ── */
+    .highlights-grid {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .highlight-card {
+      background: #fff;
+      border-radius: 0.9rem;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+      flex: 1 1 300px;
+      max-width: 48%;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .highlight-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.13);
+    }
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 290px;
+      overflow: hidden;
+      background: #e8eefc;
+    }
+    .carousel-slide { display: none; width: 100%; height: 100%; }
+    .carousel-slide.active { display: block; }
+    .carousel-slide img {
+      width: 100%; height: 290px;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+    .img-placeholder {
+      width: 100%; height: 290px;
+      background: linear-gradient(135deg, #e8eefc, #d0dcf5);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: #004aad; font-size: 0.82rem;
+      text-align: center; padding: 1rem;
+    }
+    .img-placeholder i { font-size: 2rem; margin-bottom: 0.4rem; opacity: 0.5; }
+    .img-placeholder span { opacity: 0.65; line-height: 1.5; }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(0,0,0,0.3); color: #fff;
+      border: none; border-radius: 50%;
+      width: 30px; height: 30px; font-size: 1rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; z-index: 2; padding: 0;
+    }
+    .carousel-btn:hover { background: rgba(0,0,0,0.55); }
+    .carousel-btn.prev { left: 8px; }
+    .carousel-btn.next { right: 8px; }
+    .carousel-dots {
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 2;
+    }
+    .carousel-dots .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.5); cursor: pointer; transition: background 0.2s;
+    }
+    .carousel-dots .dot.active { background: #fff; }
+    .highlight-caption { padding: 0.85rem 1.1rem 1rem; }
+    .hl-tag {
+      display: inline-block; background: #e8f0fe; color: #004aad;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 20px; margin-bottom: 0.35rem;
+    }
+    .highlight-caption strong { display: block; font-size: 0.95rem; color: #111; margin-bottom: 0.2rem; }
+    .highlight-caption p { font-size: 0.83rem; color: #555; margin: 0; }
+
+    /* ── Contact page ── */
+    .contact-page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 70%;
+      text-align: center;
+    }
+    .contact-page i { color: #004aad; margin-right: 8px; }
+    .contact-page p { margin: 0.6rem 0; font-size: 1rem; }
+
+    /* ── Global link style ── */
     a { color: #004aad; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
-    /* ── Contact ── */
-    .contact {
-      text-align: center;
-      margin-top: 3rem;
-      padding: 1.5rem;
-      background: #fff;
-      border-radius: 0.9rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    }
-    .contact h2 { border-bottom-color: #004aad; }
-    .contact p { margin: 0.5rem 0; }
-    .contact i { margin-right: 8px; color: #004aad; }
-
     footer {
+      font-size: 0.82rem; color: #aaa;
+      margin-top: 2rem; padding-top: 1rem;
+      border-top: 1px solid #e5e5e5;
       text-align: center;
-      font-size: 0.85rem;
-      color: #888;
-      margin-top: 2.5rem;
-      border-top: 1px solid #e0e0e0;
-      padding-top: 1rem;
     }
 
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-      .about-grid, .highlights-grid { flex-direction: column; }
+      .page { padding: 1.5rem 3.5rem; }
+      .about-layout { flex-direction: column; align-items: center; }
+      .highlights-grid { flex-direction: column; }
       .highlight-card { max-width: 100%; }
-      .top { flex-direction: column; }
-      nav { gap: 0.8rem; font-size: 0.82rem; }
-      .left h1 { font-size: 1.5rem; }
+      nav { gap: 0.7rem; font-size: 0.78rem; }
+      .page-arrow { width: 32px; height: 56px; font-size: 1.5rem; }
+      .dot-item .dot-label { display: none !important; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ── Navigation ── -->
-  <nav>
-    <a href="#about"        class="nav-link active">About Me</a>
-    <a href="#highlights"   class="nav-link">Highlights</a>
-    <a href="#patents"      class="nav-link">Patents</a>
-    <a href="#publications" class="nav-link">Publications</a>
-    <a href="#conferences"  class="nav-link">Conferences</a>
-    <a href="#experiences"  class="nav-link">Experiences</a>
-    <a href="#achievements" class="nav-link">Achievements</a>
-    <a href="#contact"      class="nav-link">Contact</a>
+  <!-- ── Top navigation ── -->
+  <nav id="topNav">
+    <a onclick="goToPage(0)">About Me</a>
+    <a onclick="goToPage(1)">Highlights</a>
+    <a onclick="goToPage(2)">Patents</a>
+    <a onclick="goToPage(3)">Publications</a>
+    <a onclick="goToPage(4)">Conferences</a>
+    <a onclick="goToPage(5)">Experiences</a>
+    <a onclick="goToPage(6)">Achievements</a>
+    <a onclick="goToPage(7)">Contact</a>
   </nav>
 
-  <div class="container">
+  <!-- ── Page counter ── -->
+  <div class="page-counter" id="pageCounter">1 / 8</div>
 
-    <!-- ── Profile ── -->
-    <div class="top">
-      <div class="left">
-        <img src="MadhusmitaRay.png" alt="Madhusmita Ray">
-        <h1>Madhusmita Ray</h1>
-        <p class="tagline">Ph.D. Student · Energy Research · IISc Bengaluru</p>
-        <p class="tagline-sub">Equipartition · Energy-optimal Operation</p>
+  <!-- ── Horizontal slider ── -->
+  <div class="slider-wrapper">
+    <div class="slider" id="slider">
 
-        <div class="icons">
-          <!-- ✏️ Replace YOUR-SCHOLAR-ID with your actual Google Scholar user ID -->
-          <a href="https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID" title="Google Scholar" target="_blank">
-            <i class="fa-brands fa-google-scholar"></i>
-          </a>
-          <a href="https://www.researchgate.net/profile/Madhusmita_Ray" title="ResearchGate" target="_blank">
-            <i class="fa-brands fa-researchgate"></i>
-          </a>
-          <a href="https://github.com/madhusmita25" title="GitHub" target="_blank">
-            <i class="fa-brands fa-github"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/madhusmita-ray-1ba397184/" title="LinkedIn" target="_blank">
-            <i class="fa-brands fa-linkedin"></i>
-          </a>
+      <!-- ═══════════════════════════════════════
+           PAGE 1 — ABOUT ME
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <div class="about-layout">
+
+            <!-- Profile column -->
+            <div class="profile-col">
+              <img src="MadhusmitaRay.png" alt="Madhusmita Ray">
+              <h1>Madhusmita Ray</h1>
+              <p class="tagline">Ph.D. Student · Energy Research · IISc Bengaluru</p>
+              <p class="tagline-sub">Thermodynamics · Desalination · Fuel Cells</p>
+              <!-- ✏️ Replace with your actual CV filename -->
+              <a href="MadhusmitaRay_CV.pdf" class="cv-btn" target="_blank">
+                <i class="fa-solid fa-file-arrow-down"></i> Download CV
+              </a>
+              <div class="icons">
+                <!-- ✏️ Replace YOUR-SCHOLAR-ID -->
+                <a href="https://scholar.google.com/citations?user=YOUR-SCHOLAR-ID" title="Google Scholar" target="_blank">
+                  <i class="fa-brands fa-google-scholar"></i>
+                </a>
+                <a href="https://www.researchgate.net/profile/Madhusmita_Ray" title="ResearchGate" target="_blank">
+                  <i class="fa-brands fa-researchgate"></i>
+                </a>
+                <a href="https://github.com/madhusmita25" title="GitHub" target="_blank">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/madhusmita-ray-1ba397184/" title="LinkedIn" target="_blank">
+                  <i class="fa-brands fa-linkedin"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- About content column -->
+            <div class="about-col">
+              <h2>About Me</h2>
+              <p>I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> in the <strong>Energy Research Centre</strong>. My research focuses on the thermodynamic optimal design of energy systems, particularly desalination processes for brine concentration. My previous research experience includes investigating the impact of climate change on heating and cooling energy demands, optimizing fuel cell systems, and designing solar simulators.</p>
+
+              <div class="about-grid">
+                <div class="card">
+                  <h3><i class="fa-solid fa-lightbulb"></i> Research Interests</h3>
+                  <ul>
+                    <li>Fuel Cell Systems</li>
+                    <li>Thermal &amp; Energy Systems Design</li>
+                    <li>Vapor Compression Processes</li>
+                    <li>LED-based Solar Simulation</li>
+                  </ul>
+                </div>
+                <div class="card">
+                  <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
+                  <ul>
+                    <li><strong>Ph.D.</strong> – IISc Bengaluru (2023–Present)</li>
+                    <li><strong>M.Tech</strong> – IIT Gandhinagar (2021–2023)</li>
+                    <li><strong>B.Tech</strong> – Tezpur University (2017–2021)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+           PAGE 2 — HIGHLIGHTS
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Recent Highlights</h2>
+          <div class="highlights-grid">
+
+            <!-- ICSOBA Award — 3 photos -->
+            <!-- ✏️ Upload icsoba-1.jpg, icsoba-2.jpg, icsoba-3.jpg to GitHub -->
+            <div class="highlight-card">
+              <div class="carousel" id="carousel-icsoba">
+                <div class="carousel-slide active">
+                  <img src="icsoba-1.jpg" alt="ICSOBA Award – Photo 1"
+                       onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>icsoba-1.jpg</strong><br>to your GitHub repo</span></div>'">
+                </div>
+                <div class="carousel-slide">
+                  <img src="icsoba-2.jpg" alt="ICSOBA Award – Photo 2"
+                       onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>icsoba-2.jpg</strong><br>to your GitHub repo</span></div>'">
+                </div>
+                <div class="carousel-slide">
+                  <img src="icsoba-3.jpg" alt="ICSOBA Award – Photo 3"
+                       onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>icsoba-3.jpg</strong><br>to your GitHub repo</span></div>'">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('icsoba',-1)">&#8249;</button>
+                <button class="carousel-btn next" onclick="moveCarousel('icsoba', 1)">&#8250;</button>
+                <div class="carousel-dots">
+                  <span class="dot active" onclick="goToSlide('icsoba',0)"></span>
+                  <span class="dot"        onclick="goToSlide('icsoba',1)"></span>
+                  <span class="dot"        onclick="goToSlide('icsoba',2)"></span>
+                </div>
+              </div>
+              <div class="highlight-caption">
+                <span class="hl-tag">Award · Nov 2026</span>
+                <strong>ICSOBA 2026 Student Award, Bangalore</strong>
+                <p>Received the ICSOBA 2026 Student Award at the 44th International ICSOBA Conference &amp; XXV Conference on Aluminium, Bangalore, for work on dynamic modeling of multistage MVR for alumina refining.</p>
+              </div>
+            </div>
+
+            <!-- Adelaide Visit — 3 photos -->
+            <!-- ✏️ Upload adelaide-1.jpeg, adelaide-2.jpeg, adelaide-3.jpg to GitHub -->
+            <div class="highlight-card">
+              <div class="carousel" id="carousel-adelaide">
+                <div class="carousel-slide active">
+                  <img src="adelaide-1.jpeg" alt="Adelaide Visit – Photo 1"
+                       onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>adelaide-1.jpeg</strong><br>to your GitHub repo</span></div>'">
+                </div>
+                <div class="carousel-slide">
+                  <img src="adelaide-2.jpeg" alt="Adelaide Visit – Photo 2"
+                       onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>adelaide-2.jpeg</strong><br>to your GitHub repo</span></div>'">
+                </div>
+                <div class="carousel-slide">
+                  <img src="adelaide-3.jpg" alt="Adelaide Visit – Photo 3"
+                       style="object-position: center center;"
+                       onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>adelaide-3.jpg</strong><br>to your GitHub repo</span></div>'">
+                </div>
+                <button class="carousel-btn prev" onclick="moveCarousel('adelaide',-1)">&#8249;</button>
+                <button class="carousel-btn next" onclick="moveCarousel('adelaide', 1)">&#8250;</button>
+                <div class="carousel-dots">
+                  <span class="dot active" onclick="goToSlide('adelaide',0)"></span>
+                  <span class="dot"        onclick="goToSlide('adelaide',1)"></span>
+                  <span class="dot"        onclick="goToSlide('adelaide',2)"></span>
+                </div>
+              </div>
+              <div class="highlight-caption">
+                <span class="hl-tag">Visit · Spring 2026</span>
+                <strong>Visiting Research Scholar, University of Adelaide</strong>
+                <p>Presented <em>Dynamic Modelling of Multistage MVR for Industrial Waste Heat Recovery</em> to research groups at the University of Adelaide, Australia, in collaboration with Prof. Woei Saw and Siyun Ning.</p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
-      <div class="right">
-        <section id="about">
-          <h2>About Me</h2>
-          <div class="about-content">
-            <p>I am a Ph.D. student working with <strong>Dr. Jaichander Swaminathan</strong> in the <strong>Energy Research Centre</strong> at IISc Bengaluru. My research focuses on thermodynamic optimal design of vapor compression desalination systems. I have previously worked on understanding the impact of climate change on heating/cooling energy demand, fuel cell systems optimization, and solar simulator design.</p>
-          </div>
-
-          <div class="about-grid">
-            <div class="card">
-              <h3><i class="fa-solid fa-lightbulb"></i> Research Interests</h3>
-              <ul>
-                <li>Fuel Cell Systems</li>
-                <li>Thermal &amp; Energy Systems Design</li>
-                <li>Brine Concentrations</li>
-              </ul>
-            </div>
-            <div class="card">
-              <h3><i class="fa-solid fa-graduation-cap"></i> Education</h3>
-              <ul>
-                <li><strong>Ph.D.</strong> – IISc. Bengaluru (2023–Present)</li>
-                <li><strong>M.Tech</strong> – IIT Gandhinagar (2021–2023)</li>
-                <li><strong>B.Tech</strong> – Tezpur University (2017–2021)</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-
-    <!-- ── Recent Highlights ── -->
-    <section id="highlights">
-      <h2>Recent Highlights</h2>
-      <div class="highlights-grid">
-
-        <!-- ICSOBA Award card — 3 photos -->
-        <!-- ✏️ Name your ICSOBA photos: icsoba-1.jpg, icsoba-2.jpg, icsoba-3.jpg and upload to GitHub -->
-        <div class="highlight-card">
-          <div class="carousel" id="carousel-icsoba">
-            <div class="carousel-slide active">
-              <img src="icsoba-1.jpg" alt="ICSOBA Award – Photo 1"
-                   onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>icsoba-1.jpg</strong><br>to your GitHub repo</span></div>'">
-            </div>
-            <div class="carousel-slide">
-              <img src="icsoba-2.jpg" alt="ICSOBA Award – Photo 2"
-                   onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>icsoba-2.jpg</strong><br>to your GitHub repo</span></div>'">
-            </div>
-            <div class="carousel-slide">
-              <img src="icsoba-3.jpg" alt="ICSOBA Award – Photo 3"
-                   onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>icsoba-3.jpg</strong><br>to your GitHub repo</span></div>'">
-            </div>
-            <button class="carousel-btn prev" onclick="moveCarousel('icsoba', -1)">&#8249;</button>
-            <button class="carousel-btn next" onclick="moveCarousel('icsoba',  1)">&#8250;</button>
-            <div class="carousel-dots">
-              <span class="dot active" onclick="goToSlide('icsoba', 0)"></span>
-              <span class="dot"        onclick="goToSlide('icsoba', 1)"></span>
-              <span class="dot"        onclick="goToSlide('icsoba', 2)"></span>
-            </div>
-          </div>
-          <div class="highlight-caption">
-            <span class="hl-tag">Award · Nov 2026</span>
-            <strong>ICSOBA 2026 Student Award, Bangalore</strong>
+      <!-- ═══════════════════════════════════════
+           PAGE 3 — PATENTS
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Patents</h2>
+          <div class="pub-card">
+            Swaminathan, J., <strong>Ray, M.</strong> "A Fuel Cell Stack Flow Design." Patent No. 580735.
+            <br><br>
+            <!-- ✏️ Rename your PDF to remove spaces, e.g. MadhusmitaRay_Patent.pdf -->
+            <a href="MadhusmitaRay_Patent.pdf" target="_blank">
+              <i class="fa-solid fa-file-pdf" style="color:#c0392b;"></i> View Grant Certificate
+            </a>
           </div>
         </div>
+      </div>
 
-        <!-- Adelaide Visit card — 3 photos -->
-        <!-- ✏️ Name your Adelaide photos: adelaide-1.jpeg, adelaide-2.jpeg, adelaide-3.jpg and upload to GitHub -->
-        <div class="highlight-card">
-          <div class="carousel" id="carousel-adelaide">
-            <div class="carousel-slide active">
-              <img src="adelaide-1.jpeg" alt="Adelaide Visit – Photo 1"
-                   onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>adelaide-1.jpeg</strong><br>to your GitHub repo</span></div>'">
-            </div>
-            <div class="carousel-slide">
-              <img src="adelaide-2.jpeg" alt="Adelaide Visit – Photo 2"
-                   onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>adelaide-2.jpeg</strong><br>to your GitHub repo</span></div>'">
-            </div>
-            <div class="carousel-slide">
-              <img src="adelaide-3.jpg" alt="Adelaide Visit – Photo 3"
-                   style="object-position: center center;"
-                   onerror="this.parentElement.innerHTML='<div class=&quot;img-placeholder&quot;><i class=&quot;fa-solid fa-image&quot;></i><span>Upload <strong>adelaide-3.jpeg</strong><br>to your GitHub repo</span></div>'">
-            </div>
-            <button class="carousel-btn prev" onclick="moveCarousel('adelaide', -1)">&#8249;</button>
-            <button class="carousel-btn next" onclick="moveCarousel('adelaide',  1)">&#8250;</button>
-            <div class="carousel-dots">
-              <span class="dot active" onclick="goToSlide('adelaide', 0)"></span>
-              <span class="dot"        onclick="goToSlide('adelaide', 1)"></span>
-              <span class="dot"        onclick="goToSlide('adelaide', 2)"></span>
-            </div>
+      <!-- ═══════════════════════════════════════
+           PAGE 4 — PUBLICATIONS
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Publications</h2>
+          <div class="pub-card">
+            <strong>Ray, M.</strong>, Patel, C.G., Swaminathan, J. (2025).
+            "Fuel Cell Flow Path Design for Improved Efficiency and Power Density."
+            <em>Journal of Power Sources</em>, 652, 237630.
+            <br>
+            <a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">
+              <i class="fa-solid fa-link" style="font-size:0.8rem;"></i> DOI: 10.1016/j.jpowsour.2025.237630
+            </a>
+            <p class="pub-plain-summary">
+              This work introduces an optimized flow path geometry for fuel cell stacks that improves both efficiency and power output — with direct applications to clean energy systems.
+            </p>
           </div>
-          <div class="highlight-caption">
-            <span class="hl-tag">Visit · Spring 2026</span>
-            <strong>Visiting Research Scholar, University of Adelaide</strong>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ── Patents ── -->
-    <section id="patents">
-      <h2>Patents</h2>
-      <div class="pub-card">
-        Swaminathan, J., <strong>Ray, M.</strong> "A Fuel Cell Stack Flow Design." Patent No. 580735.
-        <br><br>
-        <!-- ✏️ Rename your PDF file to remove spaces, e.g. MadhusmitaRay_Patent.pdf -->
-        <a href="Madhusmita Ray Patent.pdf" target="_blank">
-          <i class="fa-solid fa-file-pdf" style="color:#c0392b;"></i> View Grant Certificate
-        </a>
-      </div>
-    </section>
-
-    <!-- ── Publications ── -->
-    <section id="publications">
-      <h2>Publications</h2>
-      <div class="pub-card">
-        <strong>Ray, M.</strong>, Patel, C.G., Swaminathan, J. (2025).
-        "Fuel Cell Flow Path Design for Improved Efficiency and Power Density."
-        <em>Journal of Power Sources</em>, 652, 237630.
-        <br>
-        <a href="https://doi.org/10.1016/j.jpowsour.2025.237630" target="_blank">
-          <i class="fa-solid fa-link" style="font-size:0.8rem;"></i> DOI: 10.1016/j.jpowsour.2025.237630
-        </a>
-      </div>
-    </section>
-
-    <!-- ── Conferences ── -->
-    <section id="conferences">
-      <h2>Conferences</h2>
-
-      <div class="pub-card">
-        <strong>Ray, M.</strong>, Patel, C.G., Jeong, S., and Swaminathan, J.
-        "Designing fuel cell flow path for improved power performance."
-        <em>ASSET-2025</em>, Jan 2–4, 2025, IIT Guwahati. [Oral Presentation]
-      </div>
-
-      <div class="pub-card">
-        <strong>Ray, M.</strong>, Swaminathan, J.
-        "Batch modeling of MVR for high brine concentration."
-        <em>IDRA World Congress</em>, Riyadh, Jan. 2027. [Paper accepted]
-      </div>
-
-      <div class="pub-card">
-        <strong>Ray, M.</strong>, Ning, S., Saw, W., Ray, J., and Swaminathan, J.
-        "Dynamic modeling of multistage mechanical vapor recompression for alumina refining."
-        <em>Proc. 44th Int. ICSOBA Conf. &amp; XXV Conf. on Aluminium</em>, Bangalore, Nov. [Paper accepted]
-      </div>
-    </section>
-
-    <!-- ── Experiences ── -->
-    <section id="experiences">
-      <h2>Experiences</h2>
-
-      <div class="exp-card">
-        <div class="exp-icon"><i class="fa-solid fa-plane-departure"></i></div>
-        <div class="exp-body">
-          <strong>Visiting Research Scholar</strong>
-          <div class="exp-meta">University of Adelaide, Australia &nbsp;·&nbsp; Spring 2026</div>
-          <p class="exp-desc">Conducted collaborative research on mechanical vapor recompression systems for alumina refining; presented findings to international research groups.</p>
         </div>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
-        <div class="exp-body">
-          <strong>Teaching Assistant</strong>
-          <div class="exp-meta">IISc Bengaluru &nbsp;·&nbsp; Fall 2025</div>
-          <p class="exp-desc">Assisted in course instruction and student mentoring in energy systems courses at the graduate level.</p>
+      <!-- ═══════════════════════════════════════
+           PAGE 5 — CONFERENCES
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Conferences</h2>
+          <div class="pub-card">
+            <strong>Ray, M.</strong>, Patel, C.G., Jeong, S., and Swaminathan, J.
+            "Designing fuel cell flow path for improved power performance."
+            <em>ASSET-2025</em>, Jan 2–4, 2025, IIT Guwahati.
+          </div>
+          <div class="pub-card">
+            <strong>Ray, M.</strong>, Swaminathan, J.
+            "Batch modeling of MVR for high brine concentration."
+            <em>IDRA World Congress</em>, Riyadh, Nov. 2026.
+          </div>
+          <div class="pub-card">
+            <strong>Ray, M.</strong>, Ning, S., Saw, W., Ray, J., and Swaminathan, J.
+            "Dynamic modeling of multistage mechanical vapor recompression for alumina refining."
+            <em>Proc. 44th Int. ICSOBA Conf. &amp; XXV Conf. on Aluminium</em>, Bangalore, Nov. 2026.
+          </div>
         </div>
       </div>
 
-      <div class="exp-card">
-        <div class="exp-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
-        <div class="exp-body">
-          <strong>Teaching Assistant</strong>
-          <div class="exp-meta">IIT Gandhinagar &nbsp;·&nbsp; Fall 2021 – Spring 2023</div>
-          <p class="exp-desc">Supported instruction across multiple engineering courses during the M.Tech program, assisting faculty and conducting tutorial sessions.</p>
+      <!-- ═══════════════════════════════════════
+           PAGE 6 — EXPERIENCES
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Experiences</h2>
+          <div class="exp-card">
+            <div class="exp-icon"><i class="fa-solid fa-plane-departure"></i></div>
+            <div class="exp-body">
+              <strong>Visiting Research Scholar</strong>
+              <div class="exp-meta">University of Adelaide, Australia &nbsp;·&nbsp; Spring 2026</div>
+              <p class="exp-desc">Conducted collaborative research on mechanical vapor recompression systems for alumina refining; presented findings to international research groups.</p>
+            </div>
+          </div>
+          <div class="exp-card">
+            <div class="exp-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div class="exp-body">
+              <strong>Teaching Assistant</strong>
+              <div class="exp-meta">IISc Bengaluru &nbsp;·&nbsp; Fall 2025</div>
+              <p class="exp-desc">Assisted in course instruction and student mentoring in energy systems courses at the graduate level.</p>
+            </div>
+          </div>
+          <div class="exp-card">
+            <div class="exp-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div class="exp-body">
+              <strong>Teaching Assistant</strong>
+              <div class="exp-meta">IIT Gandhinagar &nbsp;·&nbsp; Fall 2021 – Spring 2023</div>
+              <p class="exp-desc">Supported instruction across multiple engineering courses during the M.Tech program, assisting faculty and conducting tutorial sessions.</p>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- ── Achievements ── -->
-    <section id="achievements">
-      <h2>Achievements</h2>
-
-      <div class="ach-card">
-        <div class="ach-title">ICSOBA Student Award</div>
-        <div class="ach-org">44th International ICSOBA Conference, Bangalore &nbsp;·&nbsp; 2026</div>
-        <p class="ach-desc">Received ICSOBA 2026 Student Award.</p>
+      <!-- ═══════════════════════════════════════
+           PAGE 7 — ACHIEVEMENTS
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Achievements</h2>
+          <div class="ach-card">
+            <div class="ach-title">ICSOBA Student Award</div>
+            <div class="ach-org">44th International ICSOBA Conference, Bangalore &nbsp;·&nbsp; 2026</div>
+            <p class="ach-desc">Received award for research on dynamic modeling of multistage mechanical vapor recompression for alumina refining, presented at the premier international conference on aluminium technology.</p>
+          </div>
+          <div class="ach-card">
+            <div class="ach-title">Director's Fellowship</div>
+            <div class="ach-org">IIT Gandhinagar &nbsp;·&nbsp; 2021–2023</div>
+            <p class="ach-desc">Received an additional institute fellowship alongside the MHRD fellowship for strong academic performance during the M.Tech program.</p>
+          </div>
+          <div class="ach-card">
+            <div class="ach-title">Rank Holder</div>
+            <div class="ach-org">Tezpur University &nbsp;·&nbsp; 2017–2021</div>
+            <p class="ach-desc">Secured 4th position in B.Tech (out of 53 candidates) in the Department of Energy Engineering.</p>
+          </div>
+          <div class="ach-card">
+            <div class="ach-title">Anundoram Borooah Award (ARBAS)</div>
+            <div class="ach-org">Dept. of Secondary Education, Assam &nbsp;·&nbsp; 2015</div>
+            <p class="ach-desc">Awarded for achieving a Distinction in the High School Leaving Certificate examinations.</p>
+          </div>
+        </div>
       </div>
 
-      <div class="ach-card">
-        <div class="ach-title">Director's Fellowship</div>
-        <div class="ach-org">IIT Gandhinagar &nbsp;·&nbsp; 2021–2023</div>
-        <p class="ach-desc">Received an additional institute fellowship alongside the MHRD fellowship for strong academic performance during the M.Tech program.</p>
+      <!-- ═══════════════════════════════════════
+           PAGE 8 — CONTACT
+      ════════════════════════════════════════ -->
+      <div class="page">
+        <div class="page-inner">
+          <h2>Contact</h2>
+          <div class="contact-page">
+            <p><i class="fa-solid fa-envelope"></i>
+              <a href="mailto:madhusmitar@iisc.ac.in">madhusmitar@iisc.ac.in</a>
+            </p>
+            <p><i class="fa-solid fa-location-dot"></i>
+              Interdisciplinary Centre for Energy Research (ICER),<br>IISc Bengaluru, India
+            </p>
+          </div>
+          <footer>© 2026 Madhusmita Ray &nbsp;|&nbsp; IISc Bengaluru</footer>
+        </div>
       </div>
 
-      <div class="ach-card">
-        <div class="ach-title">Rank Holder</div>
-        <div class="ach-org">Tezpur University &nbsp;·&nbsp; 2017–2021</div>
-        <p class="ach-desc">Secured 4th position in B.Tech (out of 53 candidates) in the Department of Energy Engineering.</p>
-      </div>
+    </div><!-- /slider -->
+  </div><!-- /slider-wrapper -->
 
-      <div class="ach-card">
-        <div class="ach-title">Anundoram Borooah Award (ARBAS)</div>
-        <div class="ach-org">Dept. of Secondary Education, Assam &nbsp;·&nbsp; 2015</div>
-        <p class="ach-desc">Awarded for achieving a Distinction in the High School Leaving Certificate examinations.</p>
-      </div>
-    </section>
+  <!-- ── Left / Right navigation arrows ── -->
+  <button class="page-arrow left"  id="prevBtn" onclick="changePage(-1)" disabled>&#8249;</button>
+  <button class="page-arrow right" id="nextBtn" onclick="changePage(1)">&#8250;</button>
 
-    <!-- ── Contact ── -->
-    <div class="contact" id="contact">
-      <h2>Contact</h2>
-      <p><i class="fa-solid fa-envelope"></i>
-        <a href="mailto:madhusmitar@iisc.ac.in">madhusmitar@iisc.ac.in</a>
-      </p>
-      <p><i class="fa-solid fa-location-dot"></i> Interdisciplinary Centre for Energy Research (ICER), IISc Bengaluru, India</p>
-    </div>
+  <!-- ── Bottom dots bar ── -->
+  <div class="page-dots-bar" id="dotsBar"></div>
 
-    <footer>
-      © 2026 Madhusmita Ray &nbsp;|&nbsp; IISc Bengaluru
-    </footer>
-
-  </div>
-
-  <!-- Photo carousel logic -->
   <script>
-    const carouselState = {};
+    // ─── Page navigation ───────────────────────────────────
+    const PAGE_NAMES = ['About Me','Highlights','Patents','Publications','Conferences','Experiences','Achievements','Contact'];
+    const TOTAL = PAGE_NAMES.length;
+    let current = 0;
 
-    function initCarousel(id) {
-      if (!carouselState[id]) carouselState[id] = 0;
+    const slider    = document.getElementById('slider');
+    const prevBtn   = document.getElementById('prevBtn');
+    const nextBtn   = document.getElementById('nextBtn');
+    const counter   = document.getElementById('pageCounter');
+    const navLinks  = document.querySelectorAll('#topNav a');
+
+    // Build dots
+    const dotsBar = document.getElementById('dotsBar');
+    PAGE_NAMES.forEach((name, i) => {
+      const item = document.createElement('div');
+      item.className = 'dot-item' + (i === 0 ? ' active' : '');
+      item.innerHTML = `<span class="dot"></span><span class="dot-label">${name}</span>`;
+      item.onclick = () => goToPage(i);
+      dotsBar.appendChild(item);
+    });
+
+    function goToPage(n) {
+      n = Math.max(0, Math.min(TOTAL - 1, n));
+      current = n;
+
+      // Slide
+      slider.style.transform = `translateX(-${n * 100}vw)`;
+
+      // Counter
+      counter.textContent = `${n + 1} / ${TOTAL}`;
+
+      // Nav highlight
+      navLinks.forEach((a, i) => a.classList.toggle('active', i === n));
+
+      // Dots
+      document.querySelectorAll('.dot-item').forEach((d, i) => d.classList.toggle('active', i === n));
+
+      // Arrows
+      prevBtn.disabled = (n === 0);
+      nextBtn.disabled = (n === TOTAL - 1);
     }
 
-    function goToSlide(id, index) {
-      initCarousel(id);
+    function changePage(dir) { goToPage(current + dir); }
+
+    // Keyboard ← →
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') changePage(1);
+      if (e.key === 'ArrowLeft')  changePage(-1);
+    });
+
+    // Swipe (but not inside a carousel)
+    let tx = 0, swipeTarget = null;
+    document.addEventListener('touchstart', e => {
+      tx = e.touches[0].clientX;
+      swipeTarget = e.target;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+      if (swipeTarget && swipeTarget.closest('.carousel')) return;
+      const dx = e.changedTouches[0].clientX - tx;
+      if (Math.abs(dx) > 45) changePage(dx < 0 ? 1 : -1);
+    }, { passive: true });
+
+    // Init
+    goToPage(0);
+
+    // ─── Photo carousel logic ───────────────────────────────
+    const cState = {};
+    function initC(id) { if (cState[id] === undefined) cState[id] = 0; }
+
+    function goToSlide(id, idx) {
+      initC(id);
       const el     = document.getElementById('carousel-' + id);
       const slides = el.querySelectorAll('.carousel-slide');
-      const dots   = el.querySelectorAll('.dot');
-      slides[carouselState[id]].classList.remove('active');
-      dots[carouselState[id]].classList.remove('active');
-      carouselState[id] = (index + slides.length) % slides.length;
-      slides[carouselState[id]].classList.add('active');
-      dots[carouselState[id]].classList.add('active');
+      const dots   = el.querySelectorAll('.carousel-dots .dot');
+      if (!slides.length) return;
+      slides[cState[id]].classList.remove('active');
+      if (dots[cState[id]]) dots[cState[id]].classList.remove('active');
+      cState[id] = ((idx % slides.length) + slides.length) % slides.length;
+      slides[cState[id]].classList.add('active');
+      if (dots[cState[id]]) dots[cState[id]].classList.add('active');
     }
 
     function moveCarousel(id, dir) {
-      initCarousel(id);
-      goToSlide(id, carouselState[id] + dir);
+      initC(id);
+      goToSlide(id, cState[id] + dir);
     }
-  </script>
-
-  <!-- Active nav highlight on scroll -->
-  <script>
-    const sections  = document.querySelectorAll("section, [id='contact']");
-    const navLinks  = document.querySelectorAll("nav a");
-
-    window.addEventListener("scroll", () => {
-      let current = "";
-      sections.forEach(sec => {
-        if (scrollY >= sec.offsetTop - 110) current = sec.getAttribute("id");
-      });
-      navLinks.forEach(link => {
-        link.classList.remove("active");
-        if (link.getAttribute("href") === `#${current}`) link.classList.add("active");
-      });
-    });
   </script>
 </body>
 </html>
